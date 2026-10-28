@@ -1,0 +1,346 @@
+{
+  "updatedAt": "2026-10-28T20:08:49.612Z",
+  "debt": {
+    "latest": {
+      "period": "2026-Q3",
+      "date": "2026-09-30",
+      "value": 3882000000000
+    },
+    "yearAgo": {
+      "period": "2025-Q3",
+      "date": "2025-09-30",
+      "value": 3518000000000
+    },
+    "perSecond": 11542.36428209031,
+    "annual": [
+      {
+        "year": 1993,
+        "value": 158800000000
+      },
+      {
+        "year": 1994,
+        "value": 157300000000
+      },
+      {
+        "year": 1995,
+        "value": 154400000000
+      },
+      {
+        "year": 1996,
+        "value": 155200000000
+      },
+      {
+        "year": 1997,
+        "value": 173100000000
+      },
+      {
+        "year": 1998,
+        "value": 194700000000
+      },
+      {
+        "year": 1999,
+        "value": 228400000000
+      },
+      {
+        "year": 2000,
+        "value": 289300000000
+      },
+      {
+        "year": 2001,
+        "value": 345000000000
+      },
+      {
+        "year": 2002,
+        "value": 395900000000
+      },
+      {
+        "year": 2003,
+        "value": 493200000000
+      },
+      {
+        "year": 2004,
+        "value": 592900000000
+      },
+      {
+        "year": 2005,
+        "value": 691200000000
+      },
+      {
+        "year": 2006,
+        "value": 802500000000
+      },
+      {
+        "year": 2007,
+        "value": 892300000000
+      },
+      {
+        "year": 2008,
+        "value": 999800000000
+      },
+      {
+        "year": 2009,
+        "value": 1178200000000
+      },
+      {
+        "year": 2010,
+        "value": 1344100000000
+      },
+      {
+        "year": 2011,
+        "value": 1499400000000
+      },
+      {
+        "year": 2012,
+        "value": 1667600000000
+      },
+      {
+        "year": 2013,
+        "value": 1683300000000
+      },
+      {
+        "year": 2014,
+        "value": 1663700000000
+      },
+      {
+        "year": 2015,
+        "value": 1673000000000
+      },
+      {
+        "year": 2016,
+        "value": 1613400000000
+      },
+      {
+        "year": 2017,
+        "value": 1624700000000
+      },
+      {
+        "year": 2018,
+        "value": 1622000000000
+      },
+      {
+        "year": 2019,
+        "value": 1640200000000
+      },
+      {
+        "year": 2020,
+        "value": 2049700000000
+      },
+      {
+        "year": 2021,
+        "value": 2465700000000
+      },
+      {
+        "year": 2022,
+        "value": 2894800000000
+      },
+      {
+        "year": 2023,
+        "value": 3110900000000
+      },
+      {
+        "year": 2024,
+        "value": 3365200000000
+      },
+      {
+        "year": 2025,
+        "value": 3677600000000
+      }
+    ],
+    "quarterly": [
+      {
+        "period": "2021-Q1",
+        "date": "2021-03-31",
+        "value": 2420000000000
+      },
+      {
+        "period": "2021-Q2",
+        "date": "2021-06-30",
+        "value": 2416000000000
+      },
+      {
+        "period": "2021-Q3",
+        "date": "2021-09-30",
+        "value": 2334000000000
+      },
+      {
+        "period": "2021-Q4",
+        "date": "2021-12-31",
+        "value": 2466000000000
+      },
+      {
+        "period": "2022-Q1",
+        "date": "2022-03-31",
+        "value": 2594000000000
+      },
+      {
+        "period": "2022-Q2",
+        "date": "2022-06-30",
+        "value": 2708000000000
+      },
+      {
+        "period": "2022-Q3",
+        "date": "2022-09-30",
+        "value": 2890000000000
+      },
+      {
+        "period": "2022-Q4",
+        "date": "2022-12-31",
+        "value": 2895000000000
+      },
+      {
+        "period": "2023-Q1",
+        "date": "2023-03-31",
+        "value": 2997000000000
+      },
+      {
+        "period": "2023-Q2",
+        "date": "2023-06-30",
+        "value": 3044000000000
+      },
+      {
+        "period": "2023-Q3",
+        "date": "2023-09-30",
+        "value": 3115000000000
+      },
+      {
+        "period": "2023-Q4",
+        "date": "2023-12-31",
+        "value": 3111000000000
+      },
+      {
+        "period": "2024-Q1",
+        "date": "2024-03-31",
+        "value": 3221000000000
+      },
+      {
+        "period": "2024-Q2",
+        "date": "2024-06-30",
+        "value": 3207000000000
+      },
+      {
+        "period": "2024-Q3",
+        "date": "2024-09-30",
+        "value": 3334000000000
+      },
+      {
+        "period": "2024-Q4",
+        "date": "2024-12-31",
+        "value": 3365000000000
+      },
+      {
+        "period": "2025-Q1",
+        "date": "2025-03-31",
+        "value": 3410000000000
+      },
+      {
+        "period": "2025-Q2",
+        "date": "2025-06-30",
+        "value": 3504000000000
+      },
+      {
+        "period": "2025-Q3",
+        "date": "2025-09-30",
+        "value": 3518000000000
+      },
+      {
+        "period": "2025-Q4",
+        "date": "2025-12-31",
+        "value": 3678000000000
+      },
+      {
+        "period": "2026-Q1",
+        "date": "2026-03-31",
+        "value": 3720000000000
+      },
+      {
+        "period": "2026-Q2",
+        "date": "2026-06-30",
+        "value": 3727000000000
+      },
+      {
+        "period": "2026-Q3",
+        "date": "2026-09-30",
+        "value": 3882000000000
+      }
+    ]
+  },
+  "population": {
+    "total": 10915839,
+    "adults": 8886675,
+    "asOf": "2025-12-31"
+  },
+  "employed": {
+    "value": 5330672,
+    "period": "2026-Q2"
+  },
+  "interest": {
+    "year": 2025,
+    "value": 98130000000
+  },
+  "comparison": {
+    "period": "2026-Q2",
+    "countries": [
+      {
+        "geo": "AT",
+        "name": "Rakousko",
+        "value": 83.6
+      },
+      {
+        "geo": "EU27_2020",
+        "name": "Průměr EU",
+        "value": 82.9
+      },
+      {
+        "geo": "HU",
+        "name": "Maďarsko",
+        "value": 75.6
+      },
+      {
+        "geo": "PL",
+        "name": "Polsko",
+        "value": 64.5
+      },
+      {
+        "geo": "DE",
+        "name": "Německo",
+        "value": 63.4
+      },
+      {
+        "geo": "SK",
+        "name": "Slovensko",
+        "value": 60.6
+      },
+      {
+        "geo": "CZ",
+        "name": "Česko",
+        "value": 43.8
+      }
+    ]
+  },
+  "sources": {
+    "debtQuarterly": {
+      "name": "MF ČR – Dluh ústředních vládních institucí (SDDS Plus)",
+      "url": "https://mf.gov.cz/cs/rozpoctova-politika/makroekonomika/special-data-dissemination-standard-plus"
+    },
+    "debtAnnual": {
+      "name": "MF ČR – Struktura a vývoj státního dluhu",
+      "url": "https://mf.gov.cz/cs/rozpoctova-politika/rizeni-statniho-dluhu/statistiky/struktura-a-vyvoj-statniho-dluhu"
+    },
+    "interest": {
+      "name": "MF ČR – Čisté výdaje na obsluhu státního dluhu",
+      "url": "https://mf.gov.cz/cs/rozpoctova-politika/rizeni-statniho-dluhu/statistiky/ciste-vydaje-na-obsluhu-statniho-dluhu"
+    },
+    "population": {
+      "name": "ČSÚ – Počet obyvatel podle pohlaví a jednotek věku (OBY02BT01)",
+      "url": "https://data.csu.gov.cz/"
+    },
+    "employed": {
+      "name": "ČSÚ – Výběrové šetření pracovních sil (ZAM01T3)",
+      "url": "https://data.csu.gov.cz/"
+    },
+    "comparison": {
+      "name": "Eurostat – Čtvrtletní dluh vládních institucí (gov_10q_ggdebt)",
+      "url": "https://ec.europa.eu/eurostat/databrowser/view/gov_10q_ggdebt/default/table"
+    }
+  }
+}

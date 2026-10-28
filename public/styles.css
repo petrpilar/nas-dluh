@@ -1,0 +1,372 @@
+:root {
+  --bg: #f5f3ef;
+  --surface: #ffffff;
+  --text: #16181d;
+  --muted: #5d6270;
+  --line: #e3e0d9;
+  --accent: #c8102e;
+  --accent-soft: #fbe7ea;
+  --bar: #a9aebb;
+  --chip: #ecebe6;
+  --radius: 14px;
+  --font: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", "Cascadia Mono", "Segoe UI Mono", Consolas, monospace;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f1729;
+    --surface: #17213a;
+    --text: #eef1f7;
+    --muted: #9aa4ba;
+    --line: #26314d;
+    --accent: #ff5a6e;
+    --accent-soft: #3a1f2c;
+    --bar: #4a5677;
+    --chip: #1f2a46;
+    color-scheme: dark;
+  }
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  line-height: 1.5;
+}
+
+a { color: inherit; }
+
+.visually-hidden {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+main, .top, .foot {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+/* ---------- hlavička ---------- */
+
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+.brand {
+  font-weight: 800;
+  font-size: 1.25rem;
+  letter-spacing: -0.02em;
+  text-decoration: none;
+}
+.brand span { color: var(--accent); }
+
+button {
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.share {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  border-radius: 999px;
+  padding: 6px 16px;
+  font-weight: 600;
+}
+.share:hover { border-color: var(--muted); }
+
+/* ---------- hero ---------- */
+
+.hero {
+  text-align: center;
+  padding: 24px 0 40px;
+}
+
+.mode-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 32px;
+}
+
+.play {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--chip);
+  color: var(--text);
+}
+.play:hover { color: var(--accent); }
+.play svg { width: 20px; height: 20px; fill: currentColor; }
+.play .icon-play,
+.play[aria-pressed="true"] .icon-pause { display: none; }
+.play[aria-pressed="true"] .icon-play { display: block; }
+.play[aria-pressed="true"] { color: var(--accent); }
+
+.modes {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px;
+  padding: 4px;
+  background: var(--chip);
+  border-radius: 999px;
+}
+
+.modes button {
+  border: 0;
+  background: transparent;
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-weight: 600;
+  color: var(--muted);
+}
+.modes button[aria-checked="true"] {
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.12);
+}
+
+.hero-label {
+  margin: 0 0 8px;
+  font-size: 1.05rem;
+  color: var(--muted);
+}
+
+.counter {
+  margin: 0;
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  font-size: clamp(1.4rem, 7.5vw, 4.5rem);
+  letter-spacing: -0.03em;
+  color: var(--accent);
+  line-height: 1.1;
+  word-break: break-word;
+}
+
+/* Každý znak má vlastní okénko; měnící se číslice vyjede ve směru změny. */
+.slide-counter { display: inline-flex; justify-content: center; }
+.slot {
+  position: relative;
+  display: inline-block;
+  overflow: hidden;
+  height: 1.15em;
+  line-height: 1.15em;
+  vertical-align: top;
+}
+.slot > span { display: block; }
+.slot > span.out { position: absolute; inset: 0; }
+
+.counter-sub {
+  margin: 12px 0 0;
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+.mode-note,
+.estimate {
+  margin: 6px auto 0;
+  max-width: 560px;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+.estimate { margin-top: 16px; font-size: 0.82rem; }
+
+/* ---------- dlaždice ---------- */
+
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.tile,
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.tile { padding: 16px; }
+
+.tile-label {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.tile-value {
+  margin: 4px 0 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+
+.tile-note {
+  margin: 2px 0 0;
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+/* ---------- karty ---------- */
+
+.card {
+  padding: 24px 20px;
+  margin-bottom: 24px;
+}
+
+.card h2 {
+  margin: 0 0 4px;
+  font-size: 1.3rem;
+  letter-spacing: -0.01em;
+}
+
+.card-sub {
+  margin: 0 0 16px;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+/* ---------- kalkulačka ---------- */
+
+.calc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px 32px;
+  margin: 16px 0 20px;
+}
+
+.calc label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.stepper {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  width: max-content;
+}
+.stepper button {
+  width: 40px;
+  height: 40px;
+  border: 0;
+  background: transparent;
+  font-size: 1.2rem;
+  border-radius: 999px;
+}
+.stepper button:hover { background: var(--chip); }
+.stepper output {
+  min-width: 2.5ch;
+  text-align: center;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--text);
+}
+
+.calc-results {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+
+/* ---------- grafy ---------- */
+
+.chart svg { display: block; width: 100%; height: auto; }
+.chart .bar { fill: var(--bar); }
+.chart .bar.now { fill: var(--accent); }
+.chart .axis { fill: var(--muted); font-size: 11px; }
+.chart .grid { stroke: var(--line); }
+.chart .value { fill: var(--text); font-size: 12px; font-weight: 700; }
+
+.chart-tip {
+  min-height: 1.5em;
+  margin: 8px 0 0;
+  font-size: 0.9rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.bars { display: grid; gap: 10px; }
+
+.bar-row {
+  display: grid;
+  grid-template-columns: 7.5rem 1fr 3.5rem;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.92rem;
+}
+.bar-row .track { height: 14px; background: var(--chip); border-radius: 999px; overflow: hidden; }
+.bar-row .fill { display: block; height: 100%; background: var(--bar); border-radius: 999px; }
+.bar-row.cz { font-weight: 700; }
+.bar-row.cz .fill { background: var(--accent); }
+.bar-row .num { text-align: right; font-variant-numeric: tabular-nums; }
+
+/* ---------- FAQ, zdroje ---------- */
+
+.faq details {
+  border-top: 1px solid var(--line);
+  padding: 12px 0;
+}
+.faq details:last-child { border-bottom: 1px solid var(--line); }
+.faq summary { cursor: pointer; font-weight: 600; }
+.faq details p { margin: 8px 0 0; color: var(--muted); }
+.faq .defs { margin: 8px 0 0; padding: 0; list-style: none; color: var(--muted); }
+.faq .defs li + li { margin-top: 6px; }
+
+.sources ul { margin: 12px 0 16px; padding-left: 20px; }
+.sources li { margin: 4px 0; }
+
+.foot {
+  padding-top: 8px;
+  padding-bottom: 40px;
+  font-size: 0.85rem;
+  color: var(--muted);
+  text-align: center;
+}
+
+.noscript { text-align: center; padding: 16px; }
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  background: var(--text);
+  color: var(--bg);
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 0.9rem;
+}
+
+@media (max-width: 480px) {
+  .modes { display: grid; grid-template-columns: 1fr 1fr; border-radius: 16px; flex: 1; }
+  .modes button { border-radius: 12px; padding: 10px 8px; }
+  .bar-row { grid-template-columns: 6rem 1fr 3rem; }
+}

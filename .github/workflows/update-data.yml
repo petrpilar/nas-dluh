@@ -1,0 +1,40 @@
+name: Aktualizace dat
+
+on:
+  schedule:
+    # každý den v 7:15 a 15:15 UTC (MF zveřejňuje data dopoledne)
+    - cron: '15 7,15 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-data
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Stáhnout a zvalidovat oficiální data
+        run: node scripts/update-data.mjs
+
+      - name: Commit, pokud se data změnila
+        run: |
+          if git diff --quiet -- public/data/dluh.json; then
+            echo "Data beze změny."
+            exit 0
+          fi
+          git config user.name "nasdluh-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/data/dluh.json
+          git commit -m "Aktualizace dat $(date -u +%Y-%m-%d)"
+          git push

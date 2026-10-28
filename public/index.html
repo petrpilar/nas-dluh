@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>NášDluh.cz – státní dluh Česka živě a na hlavu</title>
+  <meta name="description" content="Aktuální státní dluh České republiky jako živé počítadlo. Kolik připadá na obyvatele, na dospělého a na pracujícího – z oficiálních dat MF ČR a ČSÚ.">
+  <link rel="canonical" href="https://nasdluh.cz/">
+  <meta name="theme-color" content="#0f1729">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="cs_CZ">
+  <meta property="og:site_name" content="NášDluh.cz">
+  <meta property="og:url" content="https://nasdluh.cz/">
+  <meta property="og:title" content="Kolik dluží stát za tebe? – NášDluh.cz">
+  <meta property="og:description" content="Státní dluh Česka živě. Na obyvatele, na dospělého i na pracujícího – z oficiálních dat.">
+  <meta property="og:image" content="https://nasdluh.cz/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="/">Náš<span>Dluh</span>.cz</a>
+    <button class="share" type="button" data-share>Sdílet</button>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <h1 id="hero-title" class="visually-hidden">Státní dluh České republiky</h1>
+
+      <div class="mode-bar">
+        <div class="modes" role="radiogroup" aria-label="Jak dluh zobrazit">
+          <button type="button" role="radio" data-mode="celkem">Celý dluh</button>
+          <button type="button" role="radio" data-mode="obyvatele">Na obyvatele</button>
+          <button type="button" role="radio" data-mode="dospeleho">Na dospělého</button>
+          <button type="button" role="radio" data-mode="pracujiciho">Na pracujícího</button>
+        </div>
+        <!-- Ikona ukazuje akci: ⏸ když počítadlo běží, ▶ když je zastavené. -->
+        <button class="play" type="button" data-play aria-pressed="false" aria-label="Zastavit počítadlo">
+          <svg class="icon-pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg>
+          <svg class="icon-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></svg>
+        </button>
+      </div>
+
+      <p class="hero-label" data-mode-label>Státní dluh České republiky</p>
+      <p class="counter"><span class="slide-counter" data-counter aria-live="off">–</span></p>
+      <p class="counter-sub" data-rate>&nbsp;</p>
+      <p class="mode-note" data-mode-note>&nbsp;</p>
+      <p class="estimate" data-estimate>Načítám oficiální data…</p>
+    </section>
+
+    <section class="tiles" aria-label="Klíčová čísla">
+      <div class="tile">
+        <p class="tile-label">Oficiální stav dluhu</p>
+        <p class="tile-value" data-k="official">–</p>
+        <p class="tile-note" data-k="official-note"></p>
+      </div>
+      <div class="tile">
+        <p class="tile-label">Nárůst za poslední rok</p>
+        <p class="tile-value" data-k="yoy">–</p>
+        <p class="tile-note" data-k="yoy-note"></p>
+      </div>
+      <div class="tile">
+        <p class="tile-label">Úroky za rok</p>
+        <p class="tile-value" data-k="interest">–</p>
+        <p class="tile-note" data-k="interest-note"></p>
+      </div>
+      <div class="tile">
+        <p class="tile-label">Dluh vládních institucí</p>
+        <p class="tile-value" data-k="gdp">–</p>
+        <p class="tile-note" data-k="gdp-note"></p>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="calc-title">
+      <h2 id="calc-title">Kolik je to u vás doma?</h2>
+      <div class="calc">
+        <label>Počet členů domácnosti (včetně dětí)
+          <span class="stepper">
+            <button type="button" data-step="members" data-d="-1" aria-label="Méně členů">−</button>
+            <output data-v="members">3</output>
+            <button type="button" data-step="members" data-d="1" aria-label="Více členů">+</button>
+          </span>
+        </label>
+        <label>Z toho pracuje
+          <span class="stepper">
+            <button type="button" data-step="workers" data-d="-1" aria-label="Méně pracujících">−</button>
+            <output data-v="workers">2</output>
+            <button type="button" data-step="workers" data-d="1" aria-label="Více pracujících">+</button>
+          </span>
+        </label>
+      </div>
+      <div class="calc-results">
+        <div>
+          <p class="tile-label">Podíl vaší domácnosti</p>
+          <p class="tile-value" data-c="share">–</p>
+          <p class="tile-note">dluh na obyvatele × počet členů</p>
+        </div>
+        <div>
+          <p class="tile-label">Kdyby ho spláceli jen pracující</p>
+          <p class="tile-value" data-c="workers">–</p>
+          <p class="tile-note">dluh na pracujícího × počet pracujících</p>
+        </div>
+        <div>
+          <p class="tile-label">Vaše část ročních úroků</p>
+          <p class="tile-value" data-c="interest">–</p>
+          <p class="tile-note">jen úroky, bez splácení dluhu</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="hist-title">
+      <h2 id="hist-title">Jak dluh rostl od roku 1993</h2>
+      <p class="card-sub">Stav státního dluhu ke konci roku, v miliardách Kč. Poslední sloupec je poslední zveřejněné čtvrtletí.</p>
+      <div class="chart" data-history role="img" aria-label="Graf vývoje státního dluhu"></div>
+    </section>
+
+    <section class="card" aria-labelledby="cmp-title">
+      <h2 id="cmp-title">Česko a sousedé</h2>
+      <p class="card-sub" data-cmp-sub>Dluh vládních institucí v % HDP (Eurostat).</p>
+      <div class="bars" data-compare></div>
+    </section>
+
+    <section class="card faq" aria-labelledby="faq-title">
+      <h2 id="faq-title">Časté otázky</h2>
+      <details>
+        <summary>Proč se počítadlo pořád zvyšuje?</summary>
+        <p>Ministerstvo financí zveřejňuje stav státního dluhu jednou za čtvrtletí. Mezi zveřejněními počítadlo odhaduje aktuální výši tak, že k poslednímu oficiálnímu stavu přičítá průměrné tempo růstu za poslední rok. Jakmile vyjdou nová data, web se sám aktualizuje a odhad se „srovná“ s realitou.</p>
+      </details>
+      <details>
+        <summary>Jaký je rozdíl mezi státním dluhem a dluhem vládních institucí?</summary>
+        <p><strong>Státní dluh</strong> je dluh státního rozpočtu, který spravuje Ministerstvo financí – to je číslo v počítadle. <strong>Dluh vládních institucí</strong> (tzv. maastrichtský dluh) zahrnuje navíc kraje, obce, zdravotní pojišťovny a další veřejné instituce. Používá se pro mezinárodní srovnání a v poměru k HDP.</p>
+      </details>
+      <details>
+        <summary>Koho počítáte jako dospělého a pracujícího?</summary>
+        <ul class="defs">
+          <li><strong>Na obyvatele</strong> = všichni obyvatelé Česka včetně dětí a seniorů.</li>
+          <li><strong>Na dospělého</strong> = obyvatelé ve věku 18 a více let (ČSÚ, k poslednímu 31. 12.).</li>
+          <li><strong>Na pracujícího</strong> = zaměstnaní podle Výběrového šetření pracovních sil ČSÚ (zaměstnanci, podnikatelé i OSVČ ve věku 15+).</li>
+        </ul>
+      </details>
+      <details>
+        <summary>Musím ten dluh opravdu zaplatit?</summary>
+        <p>Nikdo nedostane složenku. Stát dluh obvykle nesplácí najednou, ale splatné dluhopisy nahrazuje novými. Platíme ale úroky – ty jdou ze státního rozpočtu, tedy z daní, a s růstem dluhu i úrokových sazeb rostou.</p>
+      </details>
+      <details>
+        <summary>Odkud berete data a jak často se aktualizují?</summary>
+        <p>Všechna čísla se každý den automaticky stahují z oficiálních zdrojů (viz níže). Pokud vyjde nová hodnota, web se během dne sám aktualizuje.</p>
+      </details>
+    </section>
+
+    <section class="card sources" aria-labelledby="src-title">
+      <h2 id="src-title">Zdroje a metodika</h2>
+      <ul data-sources></ul>
+      <p class="card-sub" data-updated></p>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <p>NášDluh.cz je nezávislý a nepolitický projekt. Cílem je ukázat oficiální čísla srozumitelně.</p>
+    <p><a href="https://github.com/petrpilar/nas-dluh">Zdrojový kód na GitHubu</a></p>
+  </footer>
+
+  <noscript><p class="noscript">Počítadlo potřebuje JavaScript. Oficiální data najdete na <a href="https://mf.gov.cz/cs/rozpoctova-politika/rizeni-statniho-dluhu">mf.gov.cz</a>.</p></noscript>
+</body>
+</html>
