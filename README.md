@@ -28,10 +28,15 @@ jakmile vyjdou nová data, srovná se s realitou.
 | Obyvatelé celkem a 18+ | [ČSÚ DataStat](https://data.csu.gov.cz/) – výběr `OBY02BT01` | ročně (k 31. 12.) |
 | Zaměstnaní | ČSÚ DataStat – výběr `ZAM01T3` (VŠPS) | čtvrtletně |
 | Dluh vládních institucí v % HDP, srovnání | [Eurostat `gov_10q_ggdebt`](https://ec.europa.eu/eurostat/databrowser/view/gov_10q_ggdebt/default/table) | čtvrtletně |
+| HDP ČR (poměr dluhu k HDP) | Eurostat [`nama_10_gdp`](https://ec.europa.eu/eurostat/databrowser/view/nama_10_gdp/default/table) a [`namq_10_gdp`](https://ec.europa.eu/eurostat/databrowser/view/namq_10_gdp/default/table) (data ČSÚ) | ročně / čtvrtletně |
 
 **Validace:** dluh, obyvatelé a zaměstnaní jsou povinné – když zdroj nejde stáhnout nebo vrátí
 nesmyslné číslo, skript skončí chybou, JSON zůstane beze změny a GitHub pošle e-mail o selhání Action.
-U doplňkových údajů (historie, úroky, srovnání) se při chybě ponechá poslední známá hodnota.
+U doplňkových údajů (historie, úroky, HDP, srovnání) se při chybě ponechá poslední známá hodnota.
+Navíc se zdroje kontrolují křížově (roční vs. čtvrtletní stav dluhu, tempo růstu, poměr k HDP,
+podíl dospělých), aby se chyba v jednotkách nebo záměna řádku nedostala na web. Stejné meze
+kontroluje i prohlížeč a nesmyslná data nezobrazí. Když nová data nepřijdou 200 dní, počítadlo
+se zastaví na posledním oficiálním stavu a web zobrazí upozornění.
 
 ## Lokální vývoj
 

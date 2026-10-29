@@ -6,7 +6,7 @@
 //
 // Povinné zdroje (dluh, obyvatelé, zaměstnaní): když selžou nebo neprojdou
 // validací, skript skončí chybou a JSON zůstane beze změny.
-// Doplňkové zdroje (historie, úroky, srovnání): při chybě se použije
+// Doplňkové zdroje (historie, úroky, HDP, srovnání): při chybě se použije
 // poslední hodnota z existujícího JSONu.
 
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
@@ -41,17 +41,31 @@ export const SOURCES = {
     page: 'https://data.csu.gov.cz/',
     name: 'ČSÚ – Výběrové šetření pracovních sil (ZAM01T3)',
   },
+  gdp: {
+    url: 'https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/nama_10_gdp?geo=CZ&na_item=B1GQ&unit=CP_MNAC',
+    page: 'https://ec.europa.eu/eurostat/databrowser/view/nama_10_gdp/default/table',
+    name: 'Eurostat – HDP ČR v běžných cenách, ročně (nama_10_gdp, data ČSÚ)',
+  },
+  gdpQuarterly: {
+    url: 'https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/namq_10_gdp?geo=CZ&na_item=B1GQ&unit=CP_MNAC&s_adj=NSA&lastTimePeriod=4',
+    page: 'https://ec.europa.eu/eurostat/databrowser/view/namq_10_gdp/default/table',
+    name: 'Eurostat – HDP ČR v běžných cenách, čtvrtletně (namq_10_gdp, data ČSÚ)',
+  },
   comparison: {
-    url: 'https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/gov_10q_ggdebt?unit=PC_GDP&sector=S13&na_item=GD&lastTimePeriod=1&geo=CZ&geo=SK&geo=PL&geo=DE&geo=AT&geo=HU&geo=EU27_2020',
+    url: 'https://ec.europa.eu/eurostat/api/dissemination/statistics/1.0/data/gov_10q_ggdebt?unit=PC_GDP&sector=S13&na_item=GD&lastTimePeriod=1',
     page: 'https://ec.europa.eu/eurostat/databrowser/view/gov_10q_ggdebt/default/table',
     name: 'Eurostat – Čtvrtletní dluh vládních institucí (gov_10q_ggdebt)',
   },
 };
 
+// Země zobrazené ve srovnání; pořadí v EU se počítá ze všech 27 členů.
 const GEO_NAMES = {
   CZ: 'Česko', SK: 'Slovensko', PL: 'Polsko', DE: 'Německo',
   AT: 'Rakousko', HU: 'Maďarsko', EU27_2020: 'Průměr EU',
 };
+
+const EU27 = ['AT', 'BE', 'BG', 'CY', 'CZ', 'DE', 'DK', 'EE', 'EL', 'ES', 'FI', 'FR', 'HR', 'HU', 'IE',
+  'IT', 'LT', 'LU', 'LV', 'MT', 'NL', 'PL', 'PT', 'RO', 'SE', 'SI', 'SK'];
 
 const BN = 1e9;
 
@@ -214,16 +228,44 @@ async function getEmployed() {
   return { value, period: `${y}-Q${q}` };
 }
 
+// JSON-stat s jedinou proměnnou dimenzí -> {kód: hodnota}
+function jsonStatSeries(j, dim) {
+  return Object.fromEntries(Object.entries(j.dimension[dim].category.index)
+    .map(([k, i]) => [k, j.value[i]])
+    .filter(([, v]) => typeof v === 'number'));
+}
+
+async function getGdp() {
+  const annualById = jsonStatSeries(JSON.parse(await fetchText(SOURCES.gdp.url)), 'time');
+  const annual = Object.entries(annualById)
+    .map(([year, v]) => ({ year: Number(year), value: Math.round(v * 1e6) }))
+    .sort((a, b) => a.year - b.year);
+  // HDP za poslední 4 zveřejněná čtvrtletí = roční HDP k nejnovějšímu stavu dluhu.
+  const q = Object.entries(jsonStatSeries(JSON.parse(await fetchText(SOURCES.gdpQuarterly.url)), 'time')).sort();
+  assert(q.length === 4, 'chybí čtvrtletní HDP');
+  const last4q = { from: q[0][0], to: q[3][0], value: Math.round(q.reduce((s, [, v]) => s + v, 0) * 1e6) };
+  assert(annual.length >= 20, 'neúplná řada HDP');
+  for (const g of [annual.at(-1), last4q]) {
+    assert(g.value > 3e12 && g.value < 30e12, `nesmyslné HDP ${g.value}`);
+  }
+  return { annual, last4q };
+}
+
 async function getComparison() {
   const j = JSON.parse(await fetchText(SOURCES.comparison.url));
-  const geoIdx = j.dimension.geo.category.index;
   const period = Object.keys(j.dimension.time.category.index)[0];
-  const countries = Object.entries(geoIdx)
-    .map(([geo, i]) => ({ geo, name: GEO_NAMES[geo] ?? geo, value: j.value[i] }))
-    .filter((c) => typeof c.value === 'number')
+  const all = jsonStatSeries(j, 'geo');
+  const countries = Object.entries(all)
+    .filter(([geo]) => GEO_NAMES[geo])
+    .map(([geo, value]) => ({ geo, name: GEO_NAMES[geo], value }))
     .sort((a, b) => b.value - a.value);
-  assert(countries.some((c) => c.geo === 'CZ'), 'v datech Eurostatu chybí ČR');
-  return { period, countries };
+  const cz = all.CZ;
+  assert(cz > 10 && cz < 150, `nesmyslný dluh vládních institucí ČR ${cz} % HDP`);
+  const eu = EU27.filter((g) => typeof all[g] === 'number');
+  assert(eu.length >= 25, 'v datech Eurostatu chybí většina zemí EU');
+  // Pořadí od nejnižšího dluhu; shodné hodnoty sdílejí pořadí.
+  const euRank = { rank: eu.filter((g) => all[g] < cz).length + 1, of: eu.length };
+  return { period, countries, euRank };
 }
 
 // ---------- sestavení ----------
@@ -246,9 +288,10 @@ async function main() {
   const [quarterly, population, employed] = await Promise.all([
     getDebtQuarterly(), getPopulation(), getEmployed(),
   ]);
-  const [annual, interest, comparison] = await Promise.all([
+  const [annual, interest, gdp, comparison] = await Promise.all([
     optional('historie dluhu', getDebtAnnual, prev?.debt?.annual),
     optional('úroky', getInterest, prev?.interest),
+    optional('HDP', getGdp, prev?.gdp),
     optional('srovnání', getComparison, prev?.comparison),
   ]);
 
@@ -263,6 +306,21 @@ async function main() {
   const seconds = (Date.parse(latest.date) - Date.parse(yearAgo.date)) / 1000;
   const perSecond = (latest.value - yearAgo.value) / seconds;
 
+  // Křížové kontroly: chyba v jednotkách nebo záměna řádku se projeví jako
+  // nesoulad mezi zdroji. Raději nepublikovat nic než nesmysl.
+  assert(Math.abs(perSecond) < 50_000, `nesmyslné tempo růstu ${Math.round(perSecond)} Kč/s`);
+  const q4 = quarterly.find((o) => o.period === `${annual.at(-1).year}-Q4`);
+  if (q4) {
+    const ratio = annual.at(-1).value / q4.value;
+    assert(ratio > 0.9 && ratio < 1.1, `roční a čtvrtletní stav dluhu nesouhlasí (${ratio.toFixed(2)})`);
+  }
+  assert(interest.value < latest.value * 0.1, 'úroky vyšší než 10 % dluhu – podezřelé');
+  assert(population.adults / population.total > 0.7 && population.adults / population.total < 0.9,
+    'podíl dospělých mimo 70–90 %');
+  assert(employed.value < population.adults, 'více zaměstnaných než dospělých');
+  const debtToGdp = latest.value / gdp.last4q.value;
+  assert(debtToGdp > 0.1 && debtToGdp < 1.5, `nesmyslný poměr dluhu k HDP ${debtToGdp}`);
+
   const data = {
     debt: {
       latest,
@@ -274,6 +332,7 @@ async function main() {
     population,
     employed,
     interest,
+    gdp,
     comparison,
     sources: Object.fromEntries(
       Object.entries(SOURCES).map(([k, s]) => [k, { name: s.name, url: s.page ?? s.url }]),

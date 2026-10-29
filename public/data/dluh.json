@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-28T20:08:49.612Z",
+  "updatedAt": "2026-10-29T20:05:49.059Z",
   "debt": {
     "latest": {
       "period": "2026-Q3",
@@ -277,6 +277,139 @@
     "year": 2025,
     "value": 98130000000
   },
+  "gdp": {
+    "annual": [
+      {
+        "year": 1995,
+        "value": 1607591000000
+      },
+      {
+        "year": 1996,
+        "value": 1840556000000
+      },
+      {
+        "year": 1997,
+        "value": 1982423000000
+      },
+      {
+        "year": 1998,
+        "value": 2168884000000
+      },
+      {
+        "year": 1999,
+        "value": 2267275000000
+      },
+      {
+        "year": 2000,
+        "value": 2399700000000
+      },
+      {
+        "year": 2001,
+        "value": 2591574000000
+      },
+      {
+        "year": 2002,
+        "value": 2704466000000
+      },
+      {
+        "year": 2003,
+        "value": 2833197000000
+      },
+      {
+        "year": 2004,
+        "value": 3087777000000
+      },
+      {
+        "year": 2005,
+        "value": 3288493000000
+      },
+      {
+        "year": 2006,
+        "value": 3530252000000
+      },
+      {
+        "year": 2007,
+        "value": 3856629000000
+      },
+      {
+        "year": 2008,
+        "value": 4037564000000
+      },
+      {
+        "year": 2009,
+        "value": 3945505000000
+      },
+      {
+        "year": 2010,
+        "value": 4032952000000
+      },
+      {
+        "year": 2011,
+        "value": 4095355000000
+      },
+      {
+        "year": 2012,
+        "value": 4118386000000
+      },
+      {
+        "year": 2013,
+        "value": 4169011000000
+      },
+      {
+        "year": 2014,
+        "value": 4377991000000
+      },
+      {
+        "year": 2015,
+        "value": 4651813000000
+      },
+      {
+        "year": 2016,
+        "value": 4843030000000
+      },
+      {
+        "year": 2017,
+        "value": 5179344000000
+      },
+      {
+        "year": 2018,
+        "value": 5475773000000
+      },
+      {
+        "year": 2019,
+        "value": 5888869000000
+      },
+      {
+        "year": 2020,
+        "value": 5828318000000
+      },
+      {
+        "year": 2021,
+        "value": 6307755000000
+      },
+      {
+        "year": 2022,
+        "value": 7049872000000
+      },
+      {
+        "year": 2023,
+        "value": 7659655000000
+      },
+      {
+        "year": 2024,
+        "value": 8069326000000
+      },
+      {
+        "year": 2025,
+        "value": 8573124000000
+      }
+    ],
+    "last4q": {
+      "from": "2025-Q3",
+      "to": "2026-Q2",
+      "value": 8766039000000
+    }
+  },
   "comparison": {
     "period": "2026-Q2",
     "countries": [
@@ -315,7 +448,11 @@
         "name": "Česko",
         "value": 43.8
       }
-    ]
+    ],
+    "euRank": {
+      "rank": 8,
+      "of": 27
+    }
   },
   "sources": {
     "debtQuarterly": {
@@ -337,6 +474,14 @@
     "employed": {
       "name": "ČSÚ – Výběrové šetření pracovních sil (ZAM01T3)",
       "url": "https://data.csu.gov.cz/"
+    },
+    "gdp": {
+      "name": "Eurostat – HDP ČR v běžných cenách, ročně (nama_10_gdp, data ČSÚ)",
+      "url": "https://ec.europa.eu/eurostat/databrowser/view/nama_10_gdp/default/table"
+    },
+    "gdpQuarterly": {
+      "name": "Eurostat – HDP ČR v běžných cenách, čtvrtletně (namq_10_gdp, data ČSÚ)",
+      "url": "https://ec.europa.eu/eurostat/databrowser/view/namq_10_gdp/default/table"
     },
     "comparison": {
       "name": "Eurostat – Čtvrtletní dluh vládních institucí (gov_10q_ggdebt)",
